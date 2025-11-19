@@ -116,7 +116,7 @@ select {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1.2;
+    z-index: 2;
 }
 
 .particle {
@@ -149,7 +149,7 @@ select {
     transform: translateY(20px);
     transition: opacity 1.1s ease, transform 1.1s ease;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 
     display: flex;
     flex-direction: column;
@@ -299,7 +299,7 @@ img.count-img {
 #revealBackground {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 0.5;
     top: 0;
     left: 0;
     width: 100%;
@@ -339,7 +339,7 @@ img.count-img {
     width: 100%;
     height: 100%;
     overflow: visible;
-    z-index: 1.5; /* encima del fondo, debajo del contenido y globos */
+    z-index: 2; /* encima del fondo, debajo del contenido y globos */
 }
 
 .reveal-particle {
@@ -396,7 +396,7 @@ img.count-img {
     background: #ffd1dc;
     border-radius: 50%;
     animation: riseUp 6s ease forwards;
-    z-index: 2;
+    z-index: 4;
 }
 
 @keyframes riseUp {
@@ -434,11 +434,11 @@ img.count-img {
 <!-- Music Toggle -->
 <div id="musicToggle" onclick="toggleMusic()">🔊</div>
 
-<!-- Particle layer -->
-<div id="particles"></div>
 
 <!-- Final Reveal Background -->
 <div id="revealBackground"></div>
+<!-- Particle layer -->
+<div id="particles"></div>
 <div id="revealParticles"></div>
 
 <!-- MAIN CONTENT -->
@@ -781,25 +781,25 @@ function getCountdownImage(num) {
 
 function getDelayForNumber(num) {
     // Normal (19 → 6)
-    if (num == 19) return 2000; 
-    if (num > 7) return 1100; // 1 segundo
+    if (num == 19) return 1600; 
+    if (num > 7) return 1200; // 1 segundo
 
     // Incremental (5 → 2)
     const customDelays = {
-        7: 1200,
-        6: 1250,
-        5: 1450,
-        4: 1700,
-        3: 2000,
+        7: 1300,
+        6: 1350,
+        5: 1550,
+        4: 1800,
+        3: 2100,
         2: 2300
     };
 
     if (customDelays[num]) return customDelays[num];
 
     // Último segundo (1)
-    if (num === 1) return 2700;
+    if (num === 1) return 2600;
 
-    return 1100; // default fallback
+    return 1200; // default fallback
 }
 
 /* =====================
