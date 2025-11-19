@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Revelación Bebé Ricci Lobato</title>
 
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
 
 <!-- Música suave -->
 <audio id="bgMusic" loop preload="auto">
@@ -116,7 +116,7 @@ select {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1.2;
 }
 
 .particle {
@@ -981,33 +981,36 @@ function startCountdown() {
     let count = 19;
 
     function runStep() {
-        // Mostrar número y foto
-        document.getElementById("countdown").textContent = count;
+    const countdown = document.getElementById("countdown");
+    const img = document.getElementById("countImg");
 
-        const img = document.getElementById("countImg");
+    countdown.textContent = count;
 
-        // aplicar blur al cambiar
-        img.classList.add("blurred");
-        
-        // cambiar imagen
+    // 1️⃣ Aplicar blur SUAVE antes del cambio
+    img.classList.add("blurred");
+
+    // 2️⃣ Esperar a que el blur se vea, luego cambiar la imagen
+    setTimeout(() => {
         img.src = getCountdownImage(count);
-        
-        // quitar blur después del efecto
+
+        // 3️⃣ quitar blur después para reenfocar la imagen nueva
         setTimeout(() => {
             img.classList.remove("blurred");
-        }, 180); // mismo tiempo que el CSS
+        }, 250);
 
-        if (count === 1) {
-            // último número antes de revelar
-            setTimeout(showReveal, getDelayForNumber(1));
-            return;
-        }
+    }, 200);
 
-        const delay = getDelayForNumber(count);
-        count--;
-
-        setTimeout(runStep, delay);
+    // 4️⃣ Control de tiempo del siguiente número
+    if (count === 1) {
+        setTimeout(showReveal, getDelayForNumber(1));
+        return;
     }
+
+    const delay = getDelayForNumber(count);
+    count--;
+
+    setTimeout(runStep, delay);
+}
 
     runStep();
 }
