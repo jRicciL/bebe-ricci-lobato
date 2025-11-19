@@ -331,6 +331,32 @@ img.count-img {
     transform: scale(1.04);
 }
 
+    #revealParticles {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 1.5; /* encima del fondo, debajo del contenido y globos */
+}
+
+.reveal-particle {
+    position: absolute;
+    top: -50px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+    animation: fallDown linear infinite;
+    filter: blur(0.3px);
+}
+
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(180deg); opacity: 0.4; }
+}
+
 /* =====================
    FINAL REVEAL
 ===================== */
@@ -413,6 +439,7 @@ img.count-img {
 
 <!-- Final Reveal Background -->
 <div id="revealBackground"></div>
+<div id="revealParticles"></div>
 
 <!-- MAIN CONTENT -->
 <h1 class="glass-block show" id="titleBlock">✨💛🧡♥️ Bebé Ricci Lobato ♥️🧡💛✨</h1>
@@ -572,6 +599,38 @@ function launchBalloons() {
         document.body.appendChild(b);
         setTimeout(() => b.remove(), 9000);
     }
+}
+
+function launchRevealParticles() {
+    const container = document.getElementById("revealParticles");
+
+    for (let i = 0; i < 25; i++) {
+        const p = document.createElement("div");
+        p.classList.add("reveal-particle");
+
+        // elegir si será: pétalo, hojita, copito o corazón
+        const options = ["🌸","❄️","🍃","💞"];
+        const emoji = options[Math.floor(Math.random() * options.length)];
+
+        p.textContent = emoji;
+
+        // posición inicial
+        p.style.left = Math.random() * 100 + "%";
+
+        // duración de caída (5–10s)
+        p.style.animationDuration = (5 + Math.random() * 5) + "s";
+
+        // tamaño random
+        p.style.fontSize = (16 + Math.random() * 10) + "px";
+
+        container.appendChild(p);
+
+        // borrar partícula cuando termine
+        setTimeout(() => p.remove(), 12000);
+    }
+
+    // repetir cada 800ms para mantener flujo suave
+    setTimeout(launchRevealParticles, 800);
 }
 
 /* =====================
@@ -1000,6 +1059,7 @@ function showReveal() {
     });
 
     launchBalloons();
+    launchRevealParticles();
 }
 
 document.addEventListener("keydown", function(e) {
