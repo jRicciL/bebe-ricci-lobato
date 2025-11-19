@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revelación Bebé Ricci Lobato</title>
+
+<!-- Música suave -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="audio/musica_fondo.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="revealSound">
+    <source src="audio/reveal-sound.mp3" type="audio/mpeg">
+</audio>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =====================
+   GLOBAL PAGE
+===================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Quicksand", sans-serif;
+    background-image: url("https://images.unsplash.com/photo-1422205512921-12dac7b3b603?fm=jpg&q=60&w=3000");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow-x: hidden;
+    color: #2b3a2d;
+}
+
+/* =====================
+   MUSIC TOGGLE BUTTON
+===================== */
+#musicToggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 6;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(10px);
+    padding: 10px 14px;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+#musicToggle:hover {
+    transform: scale(1.12);
+}
+
+/* SELECT MATERIAL STYLE */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background: rgba(255,255,255,0.65);
+    border: none;
+    border-bottom: 3px solid #7a8f78;
+    border-radius: 0;
+
+    padding: 12px 18px;
+    font-size: 18px;
+    width: 80%;
+    max-width: 330px;
+    color: #2b3a2d;
+
+    transition: border-color 0.3s ease;
+}
+
+/* Línea inferior cambia de color al enfocar */
+select:focus {
+    outline: none;
+    border-bottom: 3px solid #557a55; /* tono más oscuro */
+}
+
+/* placeholder (opción deshabilitada) */
+select option[value=""] {
+    color: #7d7d7d;
+}
+
+/* Flechita personalizada */
+select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23656565" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 22px;
+}
+
+/* =====================
+   PARTICLE BACKGROUND
+===================== */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120vh); }
+}
+
+/* =====================
+   CONTENT BLOCKS
+===================== */
+.glass-block {
+    background: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    border-radius: 22px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+    padding: 30px;
+    max-width: 92%;
+    width: 600px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.1s ease, transform 1.1s ease;
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.glass-block.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#titleBlock {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 4px solid rgba(255,255,255,0.7);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    opacity: 0;
+    transform: scale(0.85);
+}
+
+.profile-pic.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.pre-reveal-img {
+    width: 180px;
+    max-width: 70%;
+    margin: 10px 0 20px 0;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.pre-reveal-img.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* =====================
+   INPUTS & BUTTONS
+===================== */
+input, select, button {
+    font-family: inherit;
+    font-size: 18px;
+    padding: 12px 18px;
+    margin-top: 12px;
+    border-radius: 14px;
+    border: 2px solid #a7b9a1;
+    outline: none;
+    background: rgba(255,255,255,0.65);
+    width: 80%;
+    max-width: 330px;
+}
+
+button {
+    background: #7a8f78;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover {
+    background: #6c8069;
+    transform: scale(1.05);
+}
+
+/* DATE INPUT STYLE */
+input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+
+    background: rgba(255,255,255,0.65);
+    border: none;
+    border-bottom: 3px solid #7a8f78;
+    border-radius: 0;
+
+    padding: 12px 18px;
+    font-size: 18px;
+    width: 80%;
+    max-width: 330px;
+    color: #2b3a2d;
+
+    transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+    outline: none;
+    border-bottom: 3px solid #557a55;
+}
+
+.hidden { display: none; }
+
+/* =====================
+   COUNTDOWN
+===================== */
+#countdown {
+    font-size: 90px;
+    font-weight: 700;
+    color: #314631;
+    animation: countPop 1s ease;
+}
+
+@keyframes countPop {
+    0%   { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+img.count-img {
+    width: 70%;
+    max-width: 310px;
+    border-radius: 22px;
+    margin-top: 20px;
+    animation: imgBounce 1s ease;
+}
+
+@keyframes imgBounce {
+    0%   { transform: scale(0.7); opacity: 0; }
+    75%  { transform: scale(1.12); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.count-img {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.count-img.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* =====================
+   REVEAL BACKGROUND
+===================== */
+#revealBackground {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://images6.alphacoders.com/662/662213.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+#shareBtn {
+    margin-top: 25px;
+    padding: 10px 22px;
+    font-size: 17px;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(10px);
+    color: #2b3a2d;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.18);
+}
+
+#shareBtn:hover {
+    background: rgba(255,255,255,0.65);
+    transform: scale(1.04);
+}
+
+/* =====================
+   FINAL REVEAL
+===================== */
+#revealExtraImg {
+    display: none;
+    width: 75%;
+    max-width: 360px;
+    border-radius: 20px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 1.3s ease;
+    box-shadow:0 8px 30px rgba(0,0,0,0.25);
+}
+
+#reveal-text {
+    font-size: 60px;
+    font-weight: 700;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 2s ease, transform 2s ease;
+    color: #314631;
+}
+
+@media (max-width: 600px) {
+    #reveal-text { font-size: 42px; }
+    #countdown  { font-size: 70px; }
+}
+
+/* =====================
+   BALLOONS
+===================== */
+.balloon {
+    position: fixed;
+    bottom: -200px;
+    width: 60px;
+    height: 80px;
+    background: #ffd1dc;
+    border-radius: 50%;
+    animation: riseUp 6s ease forwards;
+    z-index: 2;
+}
+
+@keyframes riseUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-150vh); }
+}
+
+#customFooter {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: white;
+    opacity: 0.85;
+    letter-spacing: 1px;
+    font-weight: 600;
+    z-index: 5;
+    pointer-events: none;
+}
+
+@media (max-height: 600px) {
+    #customFooter {
+        position: static;
+        margin-top: 40px;
+        transform: none;
+        text-align: center;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Music Toggle -->
+<div id="musicToggle" onclick="toggleMusic()">🔊</div>
+
+<!-- Particle layer -->
+<div id="particles"></div>
+
+<!-- Final Reveal Background -->
+<div id="revealBackground"></div>
+
+<!-- MAIN CONTENT -->
+<h1 class="glass-block show" id="titleBlock">✨💛🧡♥️ Bebé Ricci Lobato ♥️🧡💛✨</h1>
+
+<div id="landing" class="glass-block show">
+    <p>Escribe tu nombre para comenzar:</p>
+    <input id="nameInput" placeholder="Tu nombre..." />
+    <br>
+    <button onclick="validateName()">Entrar</button>
+    <p id="nameError" style="color:#5b2b2b;"></p>
+</div>
+
+<div id="questions" class="glass-block hidden">
+    <h2 id="welcomeText"></h2>
+    <!-- <p>¿Cuál es el año de nacimiento de bebé?</p>
+    <input id="yearInput" placeholder="Ejemplo: 2026" /> -->
+
+    <img id="profilePic" class="profile-pic hidden" src="">
+
+    <p id="genderQuestionText" style="margin-top:20px;"></p>
+
+    <select id="guessInput">
+        <option value="" disabled selected>Selecciona una opción…</option>
+        <option value="niño">Niño</option>
+        <option value="niña">Niña</option>
+    </select>
+
+    <p style="margin-top:20px;">¿Cuál crees que será la fecha de mi nacimiento?</p>
+
+    <input 
+        type="date" 
+        id="birthDateInput" 
+        value="2026-04-15"
+    />
+
+    <p style="margin-top:20px;">¿Quién crees que va a cambiar más pañales?</p>
+
+    <select id="diaperInput">
+        <option value="" disabled selected>Selecciona una opción…</option>
+        <option value="Joel">Joel</option>
+        <option value="Jackie">Jackie</option>
+        <option value="Turno mixto">Turno mixto</option>
+        <option value="Los tíos y abuelitos 😏">Los tíos y abuelitos 😏</option>
+    </select>
+
+    <button onclick="submitQuestions()" style="margin-top:20px">Continuar</button>
+    <p id="qError" style="color:#5b2b2b;"></p>
+</div>
+
+<div id="preCountMessage" class="glass-block hidden">
+    <h2 id="preCountText"></h2>
+
+    <!-- Imagen entre las frases -->
+    <img id="preRevealImg" class="pre-reveal-img hidden" src="">
+
+    <button onclick="startCountdown()">Continuar</button>
+</div>
+
+<div id="countContainer" class="glass-block hidden">
+    <div id="countdown"></div>
+    <img id="countImg" class="count-img" src="">
+</div>
+
+<div id="reveal" class="glass-block hidden">
+    <h2 id="revealFinalText"></h2>
+
+    <!-- Imagen adicional antes del texto final -->
+    <img id="revealExtraImg" src="img/a_girl.jpg">
+
+    <h1 id="reveal-text">💗 ¡Soy una niña! 💗</h1>
+    <button id="shareBtn" onclick="sendResultsToWhatsApp()">Compartir mis respuestas con Jackie y Joel 💬</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+const expectedBirthDate = "2026-04-15"; 
+
+function sendResultsToWhatsApp() {
+    // Número de destino (usa el tuyo)
+    const number = "529541011419"; // ← PON AQUÍ EL NÚMERO DE JACKIE O TUYO
+
+    const prettyDate = guessedBirthDate
+        ? formatPrettyDate(guessedBirthDate)
+        : "No especificada";
+
+    const msg =
+        `Revelación Bebé Ricci Lobato 💖👩🏻‍🍼🌿
+
+        Nombre: ${currentName}
+
+        Predicción del género: ${guessGender}
+        Predicción de fecha de nacimiento: ${prettyDate}
+        Predicción de quién cambiará más pañales: ${diaperPrediction}
+
+        ¡Ya participé en la revelación! 💛✨`;
+
+            const url = "https://api.whatsapp.com/send?phone=&text=" 
+                        + encodeURIComponent(msg)
+                        + "&group_id=" + number;
+
+            window.open(url, "_blank");
+}
+
+/* =====================
+   MUSIC TOGGLE
+===================== */
+let musicEnabled = true;
+
+function toggleMusic() {
+    const m = document.getElementById("bgMusic");
+    const btn = document.getElementById("musicToggle");
+
+    if (musicEnabled) {
+        m.pause();
+        btn.textContent = "🔇";
+    } else {
+        m.play().catch(()=>{});
+        btn.textContent = "🔊";
+    }
+
+    musicEnabled = !musicEnabled;
+}
+
+/* =====================
+   PARTICLES
+===================== */
+function createParticles() {
+    const container = document.getElementById("particles");
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        p.style.width = p.style.height = (Math.random() * 10 + 4) + "px";
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDuration = (6 + Math.random()*6) + "s";
+        p.style.animationDelay = (-Math.random()*6) + "s";
+        container.appendChild(p);
+    }
+}
+createParticles();
+
+/* =====================
+   BALLOONS
+===================== */
+function launchBalloons() {
+    for (let i = 0; i < 12; i++) {
+        const b = document.createElement("div");
+        b.classList.add("balloon");
+
+        const colors = ["#ffd1dc","#ffb7ce","#ffc4dd","#ffd8e5","#ffccda"];
+        b.style.background = colors[i % colors.length];
+
+        b.style.left = Math.random() * 80 + 10 + "%";
+        b.style.animationDuration = (5 + Math.random()*4)+"s";
+
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), 9000);
+    }
+}
+
+/* =====================
+   PEOPLE MAP
+===================== */
+const peopleMap = {
+    "joel": ["Joel", "💙"],
+    "joel ricci lopez": ["Joel", "💙"],
+
+    "gladys lobato": ["Jackie", "💖"],
+    "jaky lobato": ["Jackie", "💖"],
+    "jaky": ["Jackie", "💖"],
+    "jackie": ["Jackie", "💖"],
+    "jackie lobato": ["Jackie", "💖"],
+    "gladys jaqueline lobato": ["Jackie", "💖"],
+
+    "oscar": ["Oscar", "💙😎"],
+    "oscar ricci": ["Oscar", "💙😎"],
+    "oscar de jesus ricci lopez": ["Oscar", "💙😎"],
+
+    "liz": ["Liz", "🌷"],
+    "liz lopez": ["Liz", "🌷"],
+    "liz lopez mesinas": ["Liz", "🌷"],
+    "liz lopez mecinas": ["Liz", "🌷"],
+    "bacilisa lopez mesinas": ["Liz", "🌷"],
+    "bacilisa": ["Liz", "🌷"],
+
+    "teresa": ["Tere", "🌼"],
+    "tere": ["Tere", "🌼"],
+    "teresa mesinas lopez": ["Tere", "🌼"],
+    "teresa mecinas lopez": ["Tere", "🌼"],
+
+    "gladys": ["Gladys", "🌸"],
+    "gladys ojeda": ["Gladys", "🌸"],
+    "gladys rosario ojeda manzano": ["Gladys", "🌸"],
+
+    "rosalia": ["Rosy y familia", "🌸"],
+    "rosalia ojeda": ["Rosy y familia", "🌸"],
+    "rosalia ojeda manzano": ["Rosy y familia", "🌸"],
+    "gloria rosalia ojeda manzano": ["Rosy y familia", "🌸"],
+    "rosy": ["Rosy y familia", "🌸"],
+
+    "ivonne": ["Ivonne y familia", "🌹"],
+    "ivonne ojeda": ["Ivonne y familia", "🌹"],
+    "ivonne ojeda manzano": ["Ivonne y familia", "🌹"],
+    "lourdes ivonne ojeda manzano": ["Ivonne y familia", "🌹"],
+
+    "astrid": ["Astrid", "🩷"],
+    "astrid ojeda": ["Astrid", "🩷"],
+    "astir": ["Astrid", "🩷"],
+
+    "mariajo": ["Majo y Moni", "💜"],
+    "majo": ["Majo y Moni", "💜"],
+    "maria jose": ["Majo y Moni", "💜"],
+    "maria jose kirkland": ["Majo y Moni", "💜"],
+
+    "ernesto": ["Ernesto", "💙"],
+    "ernesto lobato fuentes": ["Ernesto", "💙"],
+
+    "christopher": ["Chris", "⚽️"],
+    "christopher lobato ojeda": ["Chris", "⚽️"],
+    "chris": ["Chris", "⚽️"],
+    "christopher lobato": ["Chris", "⚽️"]
+};
+
+const roles = {
+    "Joel": "papá",
+    "Jackie": "mamá",
+    "Oscar": "tío",
+    "Liz": "abuelita",
+    "Tere": "abuelita",
+    "Gladys": "abuelita",
+    "Ernesto": "abuelito",
+    "Chris": "tío",
+    "Rosy y familia": "tía",
+    "Ivonne y familia": "tía",
+    "Majo y Moni": "tía",
+    "Astrid": "tía"
+};
+
+const profilePics = {
+    "Joel": "img/joel.jpg",
+    "Jackie": "img/jackie.jpg",
+    "Oscar": "img/oscar.jpg",
+    "Liz": "img/liz.jpg",
+    "Tere": "img/tere.jpg",
+    "Gladys": "img/gladys.jpg",
+    "Ernesto": "img/ernesto.jpg",
+    "Chris": "img/chris.jpg",
+    "Rosy y familia": "img/rosy.jpg",
+    "Ivonne y familia": "img/ivonne.jpg",
+    "Majo y Moni": "img/majo.jpg",
+    "Astrid": "img/astrid.jpg"
+};
+
+const imageVariantByPerson = {
+    "Joel": "b",
+    "Jackie": "a",
+    "Oscar": "b",
+    "Liz": "b",
+    "Tere": "b",
+    "Gladys": "a",
+    "Ernesto": "c",
+    "Chris": "b",
+    "Rosy y familia": "b",
+    "Ivonne y familia": "b",
+    "Majo y Moni": "b",
+    "Astrid": "b"
+};
+
+function normalize(s) { return s.trim().toLowerCase(); }
+
+function formatPrettyDate(dateStr) {
+    return new Date(dateStr).toLocaleDateString("es-MX", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getPersonInfo(inputName) {
+    const name = normalize(inputName);
+    for (const key in peopleMap) {
+        if (name.includes(key)) return peopleMap[key];
+    }
+    return null;
+}
+
+function buildGreeting(name, emoji) {
+    const role = roles[name] || "";
+    return `${emoji} ¡Hola, ${capitalize(role)} ${name}! ${emoji}`;
+}
+
+function getCountdownImage(num) {
+
+    // Para 7 al 4 usamos variantes: a, b o c
+    if (num <= 7 && num >= 4) {
+        return `img/${num}-${currentVariant}.jpg`;
+    }
+
+    // Para los demás (19–8 y 3–1)
+    return `img/${num}.jpg`;
+}
+
+function getDelayForNumber(num) {
+    // Normal (19 → 6)
+    if (num == 19) return 2000; 
+    if (num > 7) return 1100; // 1 segundo
+
+    // Incremental (5 → 2)
+    const customDelays = {
+        7: 1200,
+        6: 1250,
+        5: 1450,
+        4: 1700,
+        3: 2000,
+        2: 2300
+    };
+
+    if (customDelays[num]) return customDelays[num];
+
+    // Último segundo (1)
+    if (num === 1) return 2700;
+
+    return 1100; // default fallback
+}
+
+/* =====================
+   VALIDATE NAME
+===================== */
+let currentGreeting = "";
+let guessGender = null;
+let guessedBirthDate = null;
+let diaperPrediction = null;
+let currentVariant = "a";
+
+function playMusic() {
+    const m = document.getElementById("bgMusic");
+    m.volume = 0.4;
+    m.play().catch(()=>{});
+}
+
+function fadeSwap(hideId, showId) {
+    const hide = document.getElementById(hideId);
+    const show = document.getElementById(showId);
+
+    hide.classList.remove("show");
+    setTimeout(() => {
+        hide.classList.add("hidden");
+        show.classList.remove("hidden");
+        setTimeout(() => show.classList.add("show"), 20);
+    }, 600);
+}
+
+function validateName() {
+    playMusic();
+
+    const input = document.getElementById("nameInput").value;
+    const err = document.getElementById("nameError");
+
+    const info = getPersonInfo(input);
+
+    if (!info) {
+        err.innerHTML = "No encontré tu nombre en la lista 🙈<br>¿Está bien escrito?";
+        return;
+    }
+
+    const [personName, emoji] = info;
+
+    currentName = personName;
+    currentEmoji = emoji;
+    currentRole = roles[personName] || "";
+    currentVariant = imageVariantByPerson[personName] || "a";
+
+    currentGreeting = buildGreeting(personName, emoji);
+
+    document.getElementById("titleBlock").style.display = "none";
+
+    fadeSwap("landing","questions");
+
+    document.getElementById("welcomeText").innerHTML = currentGreeting;
+
+    // Texto dinámico: "Dime {rol} ... ¿Crees que soy niño o niña?"
+    const genderQ = document.getElementById("genderQuestionText");
+    genderQ.innerHTML = `Dime ${currentRole}… ¿Crees que soy niño o niña?`;
+
+    // Cargar foto de perfil correspondiente
+    const pic = profilePics[personName];
+
+    if (pic) {
+        const img = document.getElementById("profilePic");
+        img.src = pic;
+        img.classList.remove("hidden");
+
+        // aseguramos animación
+        setTimeout(() => img.classList.add("show"), 50);
+    };
+}
+
+/* =====================
+   QUESTIONS
+===================== */
+function submitQuestions() {
+    // const year = document.getElementById("yearInput").value.trim();
+    const guessSelect = document.getElementById("guessInput");
+    const guess = guessSelect.value;
+    const birthDate = document.getElementById("birthDateInput").value;
+    guessedBirthDate = birthDate;
+    const err = document.getElementById("qError");
+
+    // Validar año
+    // if (year !== "2026") {
+    //     err.textContent = "El año de nacimiento no es correcto 😅";
+    //     return;
+    // }
+
+    // ❗ Evitar continuar sin elegir niño/niña
+    if (!guess) {
+        err.textContent = "Por favor elige si crees que soy niño o niña 😊";
+        return;
+    }
+
+    if (!birthDate) {
+        err.textContent = "Por favor elige una fecha de nacimiento estimada 📅";
+        return;
+    }
+
+    diaperPrediction = document.getElementById("diaperInput").value;
+
+    if (!diaperPrediction) {
+        err.textContent = "¿Y quién va a cambiar más pañales? 😆 ¡Elige una opción!";
+        return;
+    }
+
+
+    // Guardar valor normalizado
+    guessGender = guess.trim().toLowerCase();
+    const genderEmoji = guessGender === "niña" ? "🎀" : "🩵";
+
+    // Validar si está dentro de ±40 días
+    const chosen = new Date(birthDate);
+    const expected = new Date(expectedBirthDate);
+
+    const diffMs = chosen - expected; // puede ser + o -
+    const diffDays = Math.abs(diffMs) / (1000 * 60 * 60 * 24);
+
+    // Si está fuera del rango permitido
+    if (diffDays > 40) {
+
+        let funnyMsg = "";
+
+        const isGirl = guessGender === "niña";
+        const babyEmoji = isGirl ? "👶🎀" : "👶🩵";
+
+        if (diffMs < 0) {
+            // Eligió una fecha demasiado TEMPRANA
+            funnyMsg = isGirl
+                ? `¡Tan pronto no llega nuestra nena! ${babyEmoji}`
+                : `¡Nuestro bebé no es tan rápido! ${babyEmoji}`;
+        } else {
+            // Eligió una fecha demasiado TARDE
+            funnyMsg = isGirl
+                ? `¡Nuestra nena no se va a tardar taaanto! 😄 ${babyEmoji}`
+                : `¡Ese campeón no se va a hacer del rogar tanto! 😆 ${babyEmoji}`;
+        }
+
+        err.textContent = funnyMsg;
+        return;
+    }
+
+    document.getElementById("preCountText").innerHTML = `
+    Así que <strong>${guessGender} ${genderEmoji}</strong> eh...
+    <br>
+
+    <img src="img/bebe-ricci-lobato1.jpg" 
+         style="width:320px; max-width:70%; margin:12px 0 18px 0; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.18);" 
+    />
+
+    <br>¡Prepárate para la gran sorpresa! 🙉
+    `;
+
+    fadeSwap("questions","preCountMessage");
+}
+
+/* =====================
+   COUNTDOWN
+===================== */
+const images = [
+    "https://placekitten.com/300/300",
+    "https://placekitten.com/300/301",
+    "https://placekitten.com/300/302",
+    "https://placekitten.com/300/303",
+    "https://placekitten.com/300/304",
+    "https://placekitten.com/300/305",
+    "https://placekitten.com/300/306",
+    "https://placekitten.com/300/307",
+    "https://placekitten.com/300/308",
+    "https://placekitten.com/300/309"
+];
+
+function startCountdown() {
+    fadeSwap("preCountMessage", "countContainer");
+
+    let count = 19;
+
+    function runStep() {
+        // Mostrar número y foto
+        document.getElementById("countdown").textContent = count;
+
+        const img = document.getElementById("countImg");
+        img.classList.remove("show"); // reiniciar animación
+        img.src = getCountdownImage(count);
+        setTimeout(() => img.classList.add("show"), 50);
+
+        if (count === 1) {
+            // último número antes de revelar
+            setTimeout(showReveal, getDelayForNumber(1));
+            return;
+        }
+
+        const delay = getDelayForNumber(count);
+        count--;
+
+        setTimeout(runStep, delay);
+    }
+
+    runStep();
+}
+
+/* =====================
+   FINAL REVEAL
+===================== */
+function showReveal() {
+
+    const bg = document.getElementById("revealBackground");
+    bg.style.display = "block";
+    setTimeout(() => bg.style.opacity = 1, 50);
+
+    fadeSwap("countContainer","reveal");
+
+    // Determinar si adivinó que era niña
+    const guessedCorrectly = (guessGender && guessGender.toLowerCase() === "niña");
+
+    // Mensaje divertido si sí adivinó
+    const surpriseText = guessedCorrectly ? "¡¿Cómo supiste?!" : "";
+
+    // Mostrar el texto final bonito
+    document.getElementById("revealFinalText").innerHTML =
+        `${capitalize(currentRole)} ${currentName} ${currentEmoji}... ${surpriseText}`;
+
+    const extra = document.getElementById("revealExtraImg");
+    extra.style.display = "block";
+
+    setTimeout(() => {
+        extra.style.opacity = 1;
+    }, 200);
+
+
+    setTimeout(() => {
+        // Reproducir sonido bonito de revelación
+        const rs = document.getElementById("revealSound");
+        rs.currentTime = 0; // por si acaso
+        rs.play().catch(()=>{});
+
+        const t = document.getElementById("reveal-text");
+        t.style.opacity = 1;
+        t.style.transform = "scale(1)";
+    }, 900);
+
+    confetti({
+        particleCount: 350,
+        spread: 90,
+        origin: { y: 0.6 }
+    });
+
+    launchBalloons();
+}
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+
+        // Pantalla 1: Nombre
+        if (!document.getElementById("landing").classList.contains("hidden")) {
+            validateName();
+            return;
+        }
+
+        // Pantalla 2: Preguntas
+        if (!document.getElementById("questions").classList.contains("hidden")) {
+            submitQuestions();
+            return;
+        }
+
+        // Pantalla 3: Mensaje antes del conteo
+        if (!document.getElementById("preCountMessage").classList.contains("hidden")) {
+            startCountdown();
+            return;
+        }
+
+    }
+});
+</script>
+
+<footer id="customFooter">Bebé Ricci-Lobato</footer>
+</body>
+</html>
