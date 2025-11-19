@@ -284,14 +284,11 @@ img.count-img {
 }
 
 .count-img {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: filter 0.18s ease;
 }
 
-.count-img.show {
-    opacity: 1;
-    transform: scale(1);
+.count-img.blurred {
+    filter: blur(6px);
 }
 
 /* =====================
@@ -927,9 +924,17 @@ function startCountdown() {
         document.getElementById("countdown").textContent = count;
 
         const img = document.getElementById("countImg");
-        img.classList.remove("show"); // reiniciar animación
+
+        // aplicar blur al cambiar
+        img.classList.add("blurred");
+        
+        // cambiar imagen
         img.src = getCountdownImage(count);
-        setTimeout(() => img.classList.add("show"), 50);
+        
+        // quitar blur después del efecto
+        setTimeout(() => {
+            img.classList.remove("blurred");
+        }, 180); // mismo tiempo que el CSS
 
         if (count === 1) {
             // último número antes de revelar
