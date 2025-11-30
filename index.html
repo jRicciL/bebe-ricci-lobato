@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+I<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
@@ -687,8 +687,8 @@ const peopleMap = {
     "maria jose": ["Majo y Moni", "💜"],
     "maria jose kirkland": ["Majo y Moni", "💜"],
 
-    "ernesto": ["Ernesto", "💙"],
-    "ernesto lobato fuentes": ["Ernesto", "💙"],
+    "ernesto": ["Ernesto", "💙😎"],
+    "ernesto lobato fuentes": ["Ernesto", "💙😎"],
 
     "christopher": ["Chris", "⚽️"],
     "christopher lobato ojeda": ["Chris", "⚽️"],
@@ -782,7 +782,7 @@ function getCountdownImage(num) {
 function getDelayForNumber(num) {
     // Normal (19 → 6)
     if (num == 19) return 1600; 
-    if (num > 7) return 1200; // 1 segundo
+    if (num > 7) return 1300; // 1 segundo
 
     // Incremental (5 → 2)
     const customDelays = {
@@ -790,14 +790,14 @@ function getDelayForNumber(num) {
         6: 1350,
         5: 1550,
         4: 1800,
-        3: 2100,
-        2: 2300
+        3: 1900,
+        2: 2100
     };
 
     if (customDelays[num]) return customDelays[num];
 
     // Último segundo (1)
-    if (num === 1) return 2600;
+    if (num === 1) return 2400;
 
     return 1200; // default fallback
 }
