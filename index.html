@@ -294,25 +294,31 @@ input[type="date"]:focus {
 }
 
 img.count-img {
-    width: 70%;
-    max-width: 310px;
+    width: 78%;
+    max-width: 360px;
     border-radius: 22px;
     margin-top: 20px;
-    animation: imgBounce 1s ease;
 }
 
-@keyframes imgBounce {
-    0%   { transform: scale(0.7); opacity: 0; }
-    75%  { transform: scale(1.12); opacity: 1; }
-    100% { transform: scale(1); }
+/* Animaciones suaves de zoom */
+.count-img.zoom-in {
+    animation: zoomIn 0.8s ease;
 }
 
-.count-img {
-    transition: filter 0.18s ease;
+.count-img.zoom-out {
+    animation: zoomOut 0.8s ease;
 }
 
-.count-img.blurred {
-    filter: blur(6px);
+@keyframes zoomIn {
+    0%   { transform: scale(0.90); opacity: 0; }
+    70%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1.00); opacity: 1; }
+}
+
+@keyframes zoomOut {
+    0%   { transform: scale(1.10); opacity: 0; }
+    70%  { transform: scale(1.00); opacity: 1; }
+    100% { transform: scale(0.96); opacity: 1; }
 }
 
 /* =====================
@@ -1137,30 +1143,51 @@ const images = [
     "https://placekitten.com/300/309"
 ];
 
+function preloadCountdownImages() {
+    // Pre-carga para evitar “parpadeos” o retrasos
+    const cache = [];
+    for (let n = 1; n <= 19; n++) {
+        const img = new Image();
+        img.src = getCountdownImage(n);
+        cache.push(img);
+    }
+}
+
 function startCountdown() {
     fadeSwap("preCountMessage", "countContainer");
 
+    // Aseguramos pre-carga justo antes de empezar
+    preloadCountdownImages();
+
     let count = 19;
+    const countdown = document.getElementById("countdown");
+    const img       = document.getElementById("countImg");
 
     function runStep() {
-        const countdown = document.getElementById("countdown");
-        const img = document.getElementById("countImg");
-
-        // 1️⃣ Cambiar número e imagen EXACTAMENTE al mismo tiempo
+        // Número que se muestra
         countdown.textContent = count;
+
+        // Limpiar clases previas de animación
+        img.classList.remove("zoom-in", "zoom-out");
+
+        // Decidir animación: impares zoom-in, pares zoom-out
+        const animationClass = (count % 2 === 0) ? "zoom-out" : "zoom-in";
+
+        // Actualizar imagen correspondiente al número actual
         img.src = getCountdownImage(count);
 
-        // 2️⃣ Aplicar el blur (visual only, NO altera timing)
-        img.classList.add("blurred");
-        setTimeout(() => img.classList.remove("blurred"), 240);
+        // Forzar reflow para reiniciar la animación
+        void img.offsetWidth;
+        img.classList.add(animationClass);
 
-        // 3️⃣ Último número
+        // Si ya llegamos a 1, programar el reveal y salir
         if (count === 1) {
-            setTimeout(showReveal, getDelayForNumber(1));
+            const finalDelay = getDelayForNumber(1);
+            setTimeout(showReveal, finalDelay);
             return;
         }
 
-        // 4️⃣ Próximo número con delay sin compensación de animaciones
+        // Siguiente paso del conteo
         const delay = getDelayForNumber(count);
         count--;
 
