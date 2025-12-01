@@ -455,6 +455,38 @@ img.count-img {
     }
 }
 
+.screen-block {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    box-sizing: border-box;
+}
+
+/* Títulos más proporcionados */
+h1 {
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+/* Vista móvil */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 26px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+}
+
+#titleBlock {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
 </style>
 </head>
 <body>
@@ -470,9 +502,9 @@ img.count-img {
 <div id="revealParticles"></div>
 
 <!-- MAIN CONTENT -->
-<h1 class="glass-block show" id="titleBlock">✨💛🧡♥️ Bebé Ricci Lobato ♥️🧡💛✨</h1>
+<h1 class="glass-block screen-block show" id="titleBlock">✨💛🧡♥️ Bebé Ricci Lobato ♥️🧡💛✨</h1>
 
-<div id="landing" class="glass-block show">
+<div id="landing" class="glass-block screen-block show">
     <p>Escribe tu nombre para comenzar:</p>
     <input id="nameInput" placeholder="Tu nombre..." />
     <br>
@@ -480,7 +512,7 @@ img.count-img {
     <p id="nameError" style="color:#5b2b2b;"></p>
 </div>
 
-<div id="questions" class="glass-block hidden">
+<div id="questions" class="glass-block screen-block hidden">
     <h2 id="welcomeText"></h2>
     <!-- <p>¿Cuál es el año de nacimiento de bebé?</p>
     <input id="yearInput" placeholder="Ejemplo: 2026" /> -->
