@@ -301,24 +301,20 @@ img.count-img {
 }
 
 /* Animaciones suaves de zoom */
-.count-img.zoom-in {
-    animation: zoomIn 0.8s ease;
+.count-img {
+    transition: 
+        transform 0.85s cubic-bezier(0.25, 0.1, 0.25, 1),
+        opacity 0.85s ease;
+    will-change: transform, opacity;
+}
+.count-img.zooming-in {
+    transform: scale(1.10);
+    opacity: 1;
 }
 
-.count-img.zoom-out {
-    animation: zoomOut 0.8s ease;
-}
-
-@keyframes zoomIn {
-    0%   { transform: scale(0.90); opacity: 0; }
-    70%  { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1.00); opacity: 1; }
-}
-
-@keyframes zoomOut {
-    0%   { transform: scale(1.10); opacity: 0; }
-    70%  { transform: scale(1.00); opacity: 1; }
-    100% { transform: scale(0.96); opacity: 1; }
+.count-img.reset {
+    transform: scale(0.92);
+    opacity: 0.6;
 }
 
 /* =====================
@@ -1199,38 +1195,37 @@ function preloadCountdownImages() {
 function startCountdown() {
     fadeSwap("preCountMessage", "countContainer");
 
-    // Aseguramos pre-carga justo antes de empezar
-    preloadCountdownImages();
-
     let count = 19;
+
     const countdown = document.getElementById("countdown");
-    const img       = document.getElementById("countImg");
+    const img = document.getElementById("countImg");
 
     function runStep() {
-        // Número que se muestra
+
+        // mostrar número
         countdown.textContent = count;
 
-        // Limpiar clases previas de animación
-        img.classList.remove("zoom-in", "zoom-out");
+        // reset visual de la imagen antes de cambiarla
+        img.classList.remove("zooming-in");
+        img.classList.add("reset");
 
-        // Decidir animación: impares zoom-in, pares zoom-out
-        const animationClass = (count % 2 === 0) ? "zoom-out" : "zoom-in";
+        // esperando un breve instante para que el reset aplique
+        setTimeout(() => {
+            img.src = getCountdownImage(count);
 
-        // Actualizar imagen correspondiente al número actual
-        img.src = getCountdownImage(count);
+            // ahora sí aplicar el zoom in suave
+            requestAnimationFrame(() => {
+                img.classList.remove("reset");
+                img.classList.add("zooming-in");
+            });
+        }, 120);
 
-        // Forzar reflow para reiniciar la animación
-        void img.offsetWidth;
-        img.classList.add(animationClass);
-
-        // Si ya llegamos a 1, programar el reveal y salir
+        // si llegamos a 1 → revelación final
         if (count === 1) {
-            const finalDelay = getDelayForNumber(1);
-            setTimeout(showReveal, finalDelay);
+            setTimeout(showReveal, getDelayForNumber(1));
             return;
         }
 
-        // Siguiente paso del conteo
         const delay = getDelayForNumber(count);
         count--;
 
