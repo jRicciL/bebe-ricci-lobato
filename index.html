@@ -256,41 +256,56 @@ input[type="date"]:focus {
 
 .hidden { display: none; }
 
-/* =====================
-   COUNTDOWN
-===================== */
-#countdown {
-    font-size: 90px;
-    font-weight: 700;
-    color: #314631;
-    animation: countPop 1s ease;
-}
-
-@keyframes countPop {
-    0%   { transform: scale(0.4); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-img.count-img {
-    width: 70%;
-    max-width: 310px;
-    border-radius: 22px;
-    margin-top: 20px;
-    animation: imgBounce 1s ease;
-}
-
-@keyframes imgBounce {
-    0%   { transform: scale(0.7); opacity: 0; }
-    75%  { transform: scale(1.12); opacity: 1; }
-    100% { transform: scale(1); }
-}
+/* ===============================
+   COUNTDOWN IMAGE – PRO CINEMATIC FX
+================================= */
 
 .count-img {
-    transition: filter 0.18s ease;
+    width: 82%;
+    max-width: 360px;
+    border-radius: 22px;
+    margin-top: 20px;
+
+    /* transición SUAVE tipo motion design */
+    transition:
+        transform 0.65s cubic-bezier(.16,.84,.44,1),
+        opacity   0.65s cubic-bezier(.16,.84,.44,1),
+        filter    0.65s cubic-bezier(.16,.84,.44,1);
 }
 
-.count-img.blurred {
-    filter: blur(6px);
+/* Fade-in suave al entrar */
+.count-img.fade-in {
+    opacity: 1;
+    filter: brightness(1);
+}
+
+/* Antes de cargar: */
+.count-img.pre-transition {
+    opacity: 0;
+    filter: brightness(0.85);
+}
+
+/* zoom-in impares */
+.count-img.zoom-in {
+    transform: scale(1.10);
+}
+
+/* zoom-out pares */
+.count-img.zoom-out {
+    transform: scale(0.92);
+}
+
+/* vibración leve final (3,2,1) */
+@keyframes subtleShake {
+    0%   { transform: translateX(0) scale(1); }
+    25%  { transform: translateX(-3px) scale(1.03); }
+    50%  { transform: translateX(3px) scale(1.03); }
+    75%  { transform: translateX(-2px) scale(1.02); }
+    100% { transform: translateX(0) scale(1); }
+}
+
+.count-img.shake {
+    animation: subtleShake 0.38s ease-in-out;
 }
 
 /* =====================
@@ -920,26 +935,29 @@ function getCountdownImage(num) {
 }
 
 function getDelayForNumber(num) {
-    // Normal (19 → 6)
-    if (num == 19) return 1600; 
-    if (num > 7) return 1300; // 1 segundo
+    // 19 → 8 = ritmo uniforme
+    if (num >= 8) return 1200;
 
-    // Incremental (5 → 2)
-    const customDelays = {
-        7: 1300,
-        6: 1350,
-        5: 1550,
-        4: 1800,
-        3: 1900,
-        2: 2100
+    // 7 → 5 = tensión creciente
+    const mid = {
+        7: 1350,
+        6: 1500,
+        5: 1650
     };
+    if (mid[num]) return mid[num];
 
-    if (customDelays[num]) return customDelays[num];
+    // 4 → 2 = pausa dramática + vibración
+    const dramatic = {
+        4: 1800,
+        3: 2000,
+        2: 2200
+    };
+    if (dramatic[num]) return dramatic[num];
 
-    // Último segundo (1)
+    // 1 = expectación total
     if (num === 1) return 2400;
 
-    return 1200; // default fallback
+    return 1200;
 }
 
 /* =====================
@@ -1121,36 +1139,52 @@ function startCountdown() {
     let count = 19;
 
     function runStep() {
-    const countdown = document.getElementById("countdown");
-    const img = document.getElementById("countImg");
+        const countdown = document.getElementById("countdown");
+        const img = document.getElementById("countImg");
 
-    countdown.textContent = count;
+        countdown.textContent = count;
 
-    // 1️⃣ Aplicar blur SUAVE antes del cambio
-    img.classList.add("blurred");
+        // limpiar todas las clases
+        img.classList.remove("zoom-in", "zoom-out", "fade-in", "pre-transition", "shake");
 
-    // 2️⃣ Esperar a que el blur se vea, luego cambiar la imagen
-    setTimeout(() => {
-        img.src = getCountdownImage(count);
+        // efecto inicial antes de cargar la imagen
+        img.classList.add("pre-transition");
 
-        // 3️⃣ quitar blur después para reenfocar la imagen nueva
+        // aplicar zoom-in o zoom-out según par/impar
+        if (count % 2 === 1) {
+            img.classList.add("zoom-in");      // impares
+        } else {
+            img.classList.add("zoom-out");     // pares
+        }
+
+        // agregar vibración para los últimos números
+        if (count <= 3) {
+            setTimeout(() => img.classList.add("shake"), 180);
+        }
+
+        // cambiar imagen después de activar la transición previa
         setTimeout(() => {
-            img.classList.remove("blurred");
-        }, 250);
+            img.src = getCountdownImage(count);
 
-    }, 200);
+            // activamos el fade-in para la nueva imagen
+            setTimeout(() => {
+                img.classList.remove("pre-transition");
+                img.classList.add("fade-in");
+            }, 15);
 
-    // 4️⃣ Control de tiempo del siguiente número
-    if (count === 1) {
-        setTimeout(showReveal, getDelayForNumber(1));
-        return;
+        }, 180);
+
+        // control del timing
+        if (count === 1) {
+            setTimeout(showReveal, getDelayForNumber(1));
+            return;
+        }
+
+        const delay = getDelayForNumber(count);
+        count--;
+
+        setTimeout(runStep, delay);
     }
-
-    const delay = getDelayForNumber(count);
-    count--;
-
-    setTimeout(runStep, delay);
-}
 
     runStep();
 }
