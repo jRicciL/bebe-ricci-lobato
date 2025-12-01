@@ -1121,36 +1121,29 @@ function startCountdown() {
     let count = 19;
 
     function runStep() {
-    const countdown = document.getElementById("countdown");
-    const img = document.getElementById("countImg");
+        const countdown = document.getElementById("countdown");
+        const img = document.getElementById("countImg");
 
-    countdown.textContent = count;
-
-    // 1️⃣ Aplicar blur SUAVE antes del cambio
-    img.classList.add("blurred");
-
-    // 2️⃣ Esperar a que el blur se vea, luego cambiar la imagen
-    setTimeout(() => {
+        // 1️⃣ Cambiar número e imagen EXACTAMENTE al mismo tiempo
+        countdown.textContent = count;
         img.src = getCountdownImage(count);
 
-        // 3️⃣ quitar blur después para reenfocar la imagen nueva
-        setTimeout(() => {
-            img.classList.remove("blurred");
-        }, 250);
+        // 2️⃣ Aplicar el blur (visual only, NO altera timing)
+        img.classList.add("blurred");
+        setTimeout(() => img.classList.remove("blurred"), 240);
 
-    }, 200);
+        // 3️⃣ Último número
+        if (count === 1) {
+            setTimeout(showReveal, getDelayForNumber(1));
+            return;
+        }
 
-    // 4️⃣ Control de tiempo del siguiente número
-    if (count === 1) {
-        setTimeout(showReveal, getDelayForNumber(1));
-        return;
+        // 4️⃣ Próximo número con delay sin compensación de animaciones
+        const delay = getDelayForNumber(count);
+        count--;
+
+        setTimeout(runStep, delay);
     }
-
-    const delay = getDelayForNumber(count);
-    count--;
-
-    setTimeout(runStep, delay);
-}
 
     runStep();
 }
