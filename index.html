@@ -637,15 +637,16 @@ function launchRevealParticles() {
    PEOPLE MAP
 ===================== */
 const peopleMap = {
+    // --- Grupo original ya validado ---
     "joel": ["Joel", "💙"],
+    "joel ricci": ["Joel", "💙"],
     "joel ricci lopez": ["Joel", "💙"],
 
-    "gladys lobato": ["Jackie", "💖"],
-    "jaky lobato": ["Jackie", "💖"],
-    "jaky": ["Jackie", "💖"],
     "jackie": ["Jackie", "💖"],
-    "jackie lobato": ["Jackie", "💖"],
+    "jacky": ["Jackie", "💖"],
+    "gladys lobato": ["Jackie", "💖"],
     "gladys jaqueline lobato": ["Jackie", "💖"],
+    "jackie lobato": ["Jackie", "💖"],
 
     "oscar": ["Oscar", "💙😎"],
     "oscar ricci": ["Oscar", "💙😎"],
@@ -654,112 +655,199 @@ const peopleMap = {
     "liz": ["Liz", "🌷"],
     "liz lopez": ["Liz", "🌷"],
     "liz lopez mesinas": ["Liz", "🌷"],
-    "liz lopez mecinas": ["Liz", "🌷"],
-    "bacilisa lopez mesinas": ["Liz", "🌷"],
     "bacilisa": ["Liz", "🌷"],
 
-    "teresa": ["Tere", "🌼"],
     "tere": ["Tere", "🌼"],
+    "teresa": ["Tere", "🌼"],
     "teresa mesinas lopez": ["Tere", "🌼"],
-    "teresa mecinas lopez": ["Tere", "🌼"],
 
     "gladys": ["Gladys", "🌸"],
     "gladys ojeda": ["Gladys", "🌸"],
     "gladys rosario ojeda manzano": ["Gladys", "🌸"],
 
+    "rosy": ["Rosy y familia", "🌸"],
     "rosalia": ["Rosy y familia", "🌸"],
     "rosalia ojeda": ["Rosy y familia", "🌸"],
-    "rosalia ojeda manzano": ["Rosy y familia", "🌸"],
-    "gloria rosalia ojeda manzano": ["Rosy y familia", "🌸"],
-    "rosy": ["Rosy y familia", "🌸"],
 
     "ivonne": ["Ivonne y familia", "🌹"],
     "ivonne ojeda": ["Ivonne y familia", "🌹"],
-    "ivonne ojeda manzano": ["Ivonne y familia", "🌹"],
-    "lourdes ivonne ojeda manzano": ["Ivonne y familia", "🌹"],
 
     "astrid": ["Astrid", "🩷"],
-    "astrid ojeda": ["Astrid", "🩷"],
     "astir": ["Astrid", "🩷"],
 
-    "jessica lobato": ["Jessy", "🌸"],
-    "jessy lobato": ["Jessy", "🌸"],
     "jessy": ["Jessy", "🌸"],
-    "jessi": ["Jessy", "🌸"],  
     "jessica": ["Jessy", "🌸"],
+    "jessy lobato": ["Jessy", "🌸"],
 
-    "kevin lázaro": ["Kevin", "✨"],
-    "kevin lazaro": ["Kevin", "✨"],
     "kevin": ["Kevin", "✨"],
+    "kevin lazaro": ["Kevin", "✨"],
+    "kevin lázaro": ["Kevin", "✨"],
 
-    "alfonso lobato": ["Alfonso", "⚽"],
-    "poncho lobato": ["Alfonso", "⚽"],
     "alfonso": ["Alfonso", "⚽"],
     "poncho": ["Alfonso", "⚽"],
+    "alfonso lobato": ["Alfonso", "⚽"],
 
-    "martín lobato": ["Martín", "🐺"],
-    "martin lobato": ["Martín", "🐺"],
-    "martín": ["Martín", "🐺"],
     "martin": ["Martín", "🐺"],
+    "martín": ["Martín", "🐺"],
 
-    "antonia  salazar": ["Toñita", "🌷"],
-    "antonia"": ["Toñita", "🌷"],
-    "toñita"": ["Toñita", "🌷"],
+    "antonita": ["Toñita", "🌷"],
+    "toñita": ["Toñita", "🌷"],
+    "antonia salazar": ["Toñita", "🌷"],
 
-    "mariajo": ["Majo y Moni", "💜"],
-    "majo": ["Majo y Moni", "💜"],
-    "maria jose": ["Majo y Moni", "💜"],
-    "maria jose kirkland": ["Majo y Moni", "💜"],
+    // --- Nuevos nombres añadidos ---
 
-    "ernesto": ["Ernesto", "💙😎"],
-    "ernesto lobato fuentes": ["Ernesto", "💙😎"],
+    // Kiki
+    "kiki": ["Kiki", "🌸"],
+    "kiki lobato": ["Kiki", "🌸"],
+    "ana kristian lobato": ["Kiki", "🌸"],
+    "ana khristian": ["Kiki", "🌸"],
+    "khristian lobato": ["Kiki", "🌸"],
 
-    "christopher": ["Chris", "⚽️"],
-    "christopher lobato ojeda": ["Chris", "⚽️"],
-    "chris": ["Chris", "⚽️"],
-    "christopher lobato": ["Chris", "⚽️"]
+    // Ithma
+    "ithma": ["Ithma", "🌸"],
+    "ithma diaz de leon": ["Ithma", "🌸"],
+    "ithma díaz de león": ["Ithma", "🌸"],
+
+    // Giova
+    "giovanni": ["Giova", "😎"],
+    "giova": ["Giova", "😎"],
+    "giovanny": ["Giova", "😎"],
+    "giovanni lobato": ["Giova", "😎"],
+    "giovanny lobato": ["Giova", "😎"],
+
+    // Khristen
+    "khristen": ["Khristen", "🌷"],
+    "khristen lobato": ["Khristen", "🌷"],
+    "khristen lobato diaz de leon": ["Khristen", "🌷"],
+
+    // Pris y Poncho
+    "priscila y alfonso": ["Pris y Poncho", "🌷"],
+    "pris y poncho": ["Pris y Poncho", "🌷"],
+    "priscila y alfonso lobato": ["Pris y Poncho", "🌷"],
+    "pris y poncho lobato": ["Pris y Poncho", "🌷"],
+
+    // Oscar (otro Oscar Lobato)
+    "oscar lobato": ["Oscar Lobato", "😎"],
+    "oscarin lobato": ["Oscar Lobato", "😎"],
+    "óscar lobato": ["Oscar Lobato", "😎"],
+
+    // Alvarito
+    "alvaro": ["Alvarito", "😎"],
+    "álvaro": ["Alvarito", "😎"],
+    "alvaro mejia": ["Alvarito", "😎"],
+    "alvaro mejia ojeda": ["Alvarito", "😎"],
+    "alvaro mejía ojeda": ["Alvarito", "😎"],
+    "álvaro mejía ojeda": ["Alvarito", "😎"],
+
+    // Alma
+    "alma": ["Alma", "🌸"],
+    "alma romero": ["Alma", "🌸"],
+    "alma romero ojeda": ["Alma", "🌸"],
+    "bibi": ["Alma", "🌸"],
+
+    // Gina
+    "gina": ["Gina", "🌸"],
+    "giorgi": ["Gina", "🌸"],
+    "georgina": ["Gina", "🌸"],
+    "georgina romero": ["Gina", "🌸"],
+    "georgina romero ojeda": ["Gina", "🌸"],
+
+    // Charlie
+    "charlie": ["Charlie", "😎"],
+    "charly": ["Charlie", "😎"],
+    "carlos": ["Charlie", "😎"],
+    "carlitos": ["Charlie", "😎"],
+    "carlos granados": ["Charlie", "😎"],
+    "carlos granados mendez": ["Charlie", "😎"],
+    "carlos granados méndez": ["Charlie", "😎"],
+
+    // Karen
+    "karen": ["Karen", "🌸"],
+    "flor karen": ["Karen", "🌸"],
+    "karen granados": ["Karen", "🌸"],
+    "karen granados mendez": ["Karen", "🌸"],
+    "karen granados méndez": ["Karen", "🌸"],
+
+    // Flor (Elba)
+    "elba": ["Flor", "🌸"],
+    "flor": ["Flor", "🌸"],
+    "elba mendez manzano": ["Flor", "🌸"],
+    "elba alicia": ["Flor", "🌸"],
 };
 
 const roles = {
     "Joel": "papá",
     "Jackie": "mamá",
-    "Oscar": "tío",
+
     "Liz": "abuelita",
     "Tere": "abuelita",
     "Gladys": "abuelita",
     "Ernesto": "abuelito",
+
+    "Oscar": "tío",
+    "Oscar Lobato": "tío",
     "Chris": "tío",
+    "Kevin": "tío",
+    "Alfonso": "tío",
+    "Martín": "tío",
+    "Giova": "tío",
+    "Charlie": "tío",
+    "Alvarito": "tío",
+
     "Rosy y familia": "tía",
     "Ivonne y familia": "tía",
     "Majo y Moni": "tía",
     "Jessy": "tía",
-    "Kevin": "tío",
-    "Alfonso": "tío",
-    "Martín": "tío",
-    "Toñita": "tía"
+    "Toñita": "tía",
+    "Kiki": "tía",
+    "Ithma": "tía",
+    "Alma": "tía",
+    "Gina": "tía",
+    "Karen": "tía",
+    "Flor": "tía",
+
+    "Pris y Poncho": "tíos",
+
+    "Khristen": "primita"
 };
 
 const profilePics = {
     "Joel": "img/joel.jpg",
     "Jackie": "img/jackie.jpg",
-    "Oscar": "img/oscar.jpg",
+
     "Liz": "img/liz.jpg",
     "Tere": "img/tere.jpg",
     "Gladys": "img/gladys.jpg",
     "Ernesto": "img/ernesto.jpg",
+
+    "Oscar": "img/oscar.jpg",
+    "Oscar Lobato": "img/oscar_lobato.jpg",
     "Chris": "img/chris.jpg",
+    "Kevin": "img/kevin.jpg",
+    "Alfonso": "img/alfonso.jpg",
+    "Martín": "img/martin.jpg",
+    "Giova": "img/giova.jpg",
+    "Charlie": "img/charlie.jpg",
+    "Alvarito": "img/alvarito.jpg",
+
     "Rosy y familia": "img/rosy.jpg",
     "Ivonne y familia": "img/ivonne.jpg",
     "Majo y Moni": "img/majo.jpg",
-    "Astrid": "img/astrid.jpg",
     "Jessy": "img/jessy.jpg",
-    "Kevin": "img/kevin.jpg",
-    "Alfonso": "img/alfonso.jpg",
     "Toñita": "img/tonita.jpg",
-    "Martín": "img/martin.jpg"
+    "Kiki": "img/kiki.jpg",
+    "Ithma": "img/ithma.jpg",
+    "Alma": "img/alma.jpg",
+    "Gina": "img/gina.jpg",
+    "Karen": "img/karen.jpg",
+    "Flor": "img/flor.jpg",
+
+    "Khristen": "img/khristen.jpg",
+    "Pris y Poncho": "img/pris_y_poncho.jpg"
 };
 
 const imageVariantByPerson = {
+    // --- Variantes originales que pediste preservar ---
     "Joel": "b",
     "Jackie": "a",
     "Oscar": "b",
@@ -776,7 +864,21 @@ const imageVariantByPerson = {
     "Kevin": "c",
     "Alfonso": "c",
     "Toñita": "c",
-    "Martín": "c"
+    "Martín": "c",
+
+    // --- Variantes nuevas (todas = "c") ---
+    "Kiki": "c",
+    "Ithma": "c",
+    "Giova": "c",
+    "Khristen": "c",
+    "Pris y Poncho": "c",
+    "Oscar Lobato": "c",
+    "Alvarito": "a",
+    "Alma": "a",
+    "Gina": "a",
+    "Charlie": "a",
+    "Karen": "a",
+    "Flor": "a"
 };
 
 function normalize(s) { return s.trim().toLowerCase(); }
