@@ -873,8 +873,10 @@ const peopleMap = {
 
     // Mariajo (y moni)
     "mariajo": ["Majo y Moni", "🌸"],
+    "mariajo y Moni": ["Majo y Moni", "🌸"],
     "majo": ["Majo y Moni", "🌸"],
     "majo y moni": ["Majo y Moni", "🌸"],
+    "moni y majo": ["Majo y Moni", "🌸"],
     "maria jose": ["Majo y Moni", "🌸"],
     "maria josé": ["Majo y Moni", "🌸"],
 
@@ -1009,7 +1011,15 @@ function capitalize(str) {
 
 function getPersonInfo(inputName) {
     const name = normalize(inputName);
-    for (const key in peopleMap) {
+    
+    // 1. Obtenemos todas las claves (nombres en la lista)
+    const keys = Object.keys(peopleMap);
+
+    // 2. Las ordenamos por longitud: de la MÁS LARGA a la más corta.
+    // Esto asegura que "Pris y Poncho" se verifique antes que "Poncho".
+    keys.sort((a, b) => b.length - a.length);
+
+    for (const key of keys) {
         if (name.includes(key)) return peopleMap[key];
     }
     return null;
@@ -1104,7 +1114,7 @@ function validateName() {
 
     // --- DETECCIÓN DE PLURAL ---
     // Si el nombre incluye " y " (con espacios), asumimos que son dos personas
-    isPlural = currentName.toLowerCase().includes(" y "); 
+    isPlural = currentName.toLowerCase().includes(" y ") || currentRole.trim().toLowerCase().endsWith("s"); 
 
     currentGreeting = buildGreeting(personName, emoji);
 
