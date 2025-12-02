@@ -821,6 +821,8 @@ const peopleMap = {
     "pris y poncho": ["Pris y Poncho", "🌷"],
     "priscila y alfonso lobato": ["Pris y Poncho", "🌷"],
     "pris y poncho lobato": ["Pris y Poncho", "🌷"],
+    "alfonso y priscila": ["Pris y Poncho", "🌷"],
+    "poncho y pris": ["Pris y Poncho", "🌷"],
 
     // Oscar (otro Oscar Lobato)
     "oscar": ["Oscar Lobato", "😎"],
@@ -1011,17 +1013,33 @@ function capitalize(str) {
 
 function getPersonInfo(inputName) {
     const name = normalize(inputName);
-    
-    // 1. Obtenemos todas las claves (nombres en la lista)
-    const keys = Object.keys(peopleMap);
 
-    // 2. Las ordenamos por longitud: de la MÁS LARGA a la más corta.
-    // Esto asegura que "Pris y Poncho" se verifique antes que "Poncho".
+    // --- BLOQUE DE SEGURIDAD (FORZADO) ---
+    // Si detectamos que escribieron AMBOS nombres, devolvemos la pareja inmediatamente
+    // sin importar lo que diga el resto de la lista.
+    
+    // Caso: Pris y Poncho
+    if (name.includes("pris") && name.includes("poncho")) {
+        return peopleMap["pris y poncho"]; 
+    }
+
+    // Caso: Majo y Moni (por si acaso también daba problemas)
+    if (name.includes("majo") && name.includes("moni")) {
+        return peopleMap["majo y moni"];
+    }
+    // -------------------------------------
+
+
+    // AQUI SIGUE TU LÓGICA NORMAL DE BÚSQUEDA
+    const keys = Object.keys(peopleMap);
+    
+    // Ordenamos por longitud para intentar que el resto funcione bien
     keys.sort((a, b) => b.length - a.length);
 
     for (const key of keys) {
         if (name.includes(key)) return peopleMap[key];
     }
+    
     return null;
 }
 
