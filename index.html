@@ -1062,6 +1062,7 @@ let guessGender = null;
 let guessedBirthDate = null;
 let diaperPrediction = null;
 let currentVariant = "a";
+let isPlural = false;
 
 function playMusic() {
     const m = document.getElementById("bgMusic");
@@ -1101,6 +1102,10 @@ function validateName() {
     currentRole = roles[personName] || "";
     currentVariant = imageVariantByPerson[personName] || "a";
 
+    // --- DETECCIÓN DE PLURAL ---
+    // Si el nombre incluye " y " (con espacios), asumimos que son dos personas
+    isPlural = currentName.toLowerCase().includes(" y "); 
+
     currentGreeting = buildGreeting(personName, emoji);
 
     document.getElementById("titleBlock").style.display = "none";
@@ -1109,9 +1114,16 @@ function validateName() {
 
     document.getElementById("welcomeText").innerHTML = currentGreeting;
 
-    // Texto dinámico: "Dime {rol} ... ¿Crees que soy niño o niña?"
+    // --- LÓGICA DE TEXTO DINÁMICO ---
     const genderQ = document.getElementById("genderQuestionText");
-    genderQ.innerHTML = `Dime ${currentRole}… ¿Crees que soy niño o niña?`;
+    
+    if (isPlural) {
+        // Versión Plural
+        genderQ.innerHTML = `Díganme ${currentRole}… ¿Creen que soy niño o niña?`;
+    } else {
+        // Versión Singular
+        genderQ.innerHTML = `Dime ${currentRole}… ¿Crees que soy niño o niña?`;
+    }
 
     // Cargar foto de perfil correspondiente
     const pic = profilePics[personName];
@@ -1124,6 +1136,17 @@ function validateName() {
         // aseguramos animación
         setTimeout(() => img.classList.add("show"), 50);
     };
+    
+    // (Opcional) Actualizar las otras preguntas estáticas al plural
+    if (isPlural) {
+       // Buscamos los textos en el HTML y los cambiamos solo si es plural
+       // Nota: Esto busca por contenido de texto aproximado en el bloque de preguntas
+       const labels = document.getElementById("questions").getElementsByTagName("p");
+       for(let p of labels) {
+           if(p.innerText.includes("crees que será")) p.innerText = "¿Cuál creen que será la fecha de mi nacimiento?";
+           if(p.innerText.includes("crees que va")) p.innerText = "¿Quién creen que va a cambiar más pañales?";
+       }
+    }
 }
 
 /* =====================
@@ -1294,8 +1317,11 @@ function showReveal() {
     // Determinar si adivinó que era niña
     const guessedCorrectly = (guessGender && guessGender.toLowerCase() === "niña");
 
-    // Mensaje divertido si sí adivinó
-    const surpriseText = guessedCorrectly ? "¡¿Cómo supiste?!" : "";
+    // Mensaje divertido si sí adivinó (ADAPTADO A PLURAL)
+    let surpriseText = "";
+    if (guessedCorrectly) {
+        surpriseText = isPlural ? "¡¿Cómo supieron?!" : "¡¿Cómo supiste?!";
+    }
 
     // Mostrar el texto final bonito
     document.getElementById("revealFinalText").innerHTML =
